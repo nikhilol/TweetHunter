@@ -1,32 +1,40 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import {Input} from '@chakra-ui/react'
+import {Input, Button} from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 
-const endpoint = 'https://rickandmortyapi.com/api/character'
 
-export async function getServerSideProps({}){
-  const res = await fetch(endpoint, {
-    headers: {Authentication: 'Bearer Token'}
-  });
-  const data = await res.json();
-  return {
-    props:{data}
-  }
-}
+
 
 export default function Home(props) {
-  console.log(props.data.results)
+
+  const[username,  setUsername] = useState(null)
+  const[tweets,  setTweets] = useState(null)
+
+  async function fetchTweets(){
+    let res = await fetch('/api/data?username=' + username)
+    let data = await res.json()
+    console.log(data)
+    setTweets(data)
+  }
+
+  
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Title</h1>
-      <div style={{display:'flex', alignItems:'center'}}>
-        <div style={{marginRight:'0.5 rem'}}>Handle:</div>
-        <Input placeholder='@' size='sm'></Input>
+      <div className={styles.InputContainer}>
+        <div className={styles.InputLabel}>Handle:</div>
+        <Input onChange={(e)=>setUsername(e.target.value)} placeholder='@' size='sm'></Input>
+        <Button onClick={fetchTweets} style={{borderRadius:'3px', marginLeft:'0.5vw'}} size='sm' background='cyan.400' color='white'>Search</Button>
       </div>
       <ul className={styles.grid}>
-        {
-          props.data.results.map(result=> <li className={styles.card}>{result.name}</li> )
+        { tweets &&
+          tweets.map(tweet=>{
+            return(
+              <li className={styles.card}>{JSON.stringify(tweet.text)}</li>
+            )
+          })
         }
       </ul>
     </div>

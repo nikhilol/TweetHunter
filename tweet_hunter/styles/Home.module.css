@@ -119,3 +119,11 @@
     flex-direction: column;
   }
 }
+
+.InputContainer{
+  display: flex;
+  align-items: center
+}
+.InputLabel{
+  margin-right: 0.5vw;
+}
