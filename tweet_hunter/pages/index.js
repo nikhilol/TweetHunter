@@ -32,7 +32,7 @@ export default function Home(props) {
         { tweets &&
           tweets.map(tweet=>{
             return(
-              <li className={styles.card}>{JSON.stringify(tweet.text)}</li>
+              <li className={styles.card}>{tweet.retweeted_status ? tweet.retweeted_status.full_text : tweet.full_text}</li>
             )
           })
         }
