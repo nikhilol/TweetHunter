@@ -79,7 +79,7 @@
 
 .card {
   list-style-type: none;
-  margin: 1rem;
+  margin-bottom: 1rem;
   padding: 1.5rem;
   text-align: left;
   color: inherit;

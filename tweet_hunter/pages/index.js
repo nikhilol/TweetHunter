@@ -55,8 +55,7 @@ export default function Home(props) {
 		<div className={styles.container}>
 			<h1 style={{marginBottom:'2vh', fontWeight:'bold', fontSize:'3vh'}}>Popular Tweets ⭐</h1>
 			<div className={styles.InputContainer}>
-				<div className={styles.InputLabel}>Handle:</div>
-				<Input onChange={(e) => setUsername(e.target.value)} placeholder="@" size="sm"></Input>
+				<Input onChange={(e) => setUsername(e.target.value)} placeholder="Twitter Handle" size="sm"></Input>
 				<Button
 					onClick={fetchTweets}
 					borderRadius= "3px"
