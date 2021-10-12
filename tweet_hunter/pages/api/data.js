@@ -2,13 +2,13 @@
 
 export default async function handler(req, res) {
   console.log(req.query)
-  const { username } = req.query
+  const { username, count, retweets, replies } = req.query
+  console.log('RT: ' + retweets)
+  console.log('Replies: ' + replies)
 
-
-  console.log(username)
-  const endpoint = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${username}&tweet_mode=extended`
+  const endpoint = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${username}&include_rts=${retweets}&count=${count}&exclude_replies=${!replies}`
   const twitterRes = await fetch(endpoint, {
-    headers: {'Authorization': "Bearer AAAAAAAAAAAAAAAAAAAAAOD9EQEAAAAAvipSJivAOql%2Fn3%2F8YBUnbWm4c64%3Dp3lJZKY270PgQWfmxZ2DdNyIRLgahNU1UVd6BkKuMTWanoZmy1"}
+    headers: {'Authorization': "Bearer AAAAAAAAAAAAAAAAAAAAAOD9EQEAAAAAasc8XCY3KesPdYFiLXQrq7gxVWE%3DdsiQZIPEmu1MGqrbfCiEXAbAk5uymBnDbrCfkb3iZOHhLBYXBQ"}
   });
   const data = await twitterRes.json();
   res.send(data)

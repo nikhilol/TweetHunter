@@ -73,7 +73,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 600px;
   margin-top: 3rem;
 }
 
@@ -93,19 +93,13 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: #1DA1F2;;
+  border-color: #1DA1F2;
 }
 
 .card h2 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
-}
-
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
 }
 
 .logo {
