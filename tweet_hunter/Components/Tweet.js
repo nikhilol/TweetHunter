@@ -1,7 +1,6 @@
 import styles from "../styles/Home.module.css";
 import { memo } from "react";
-import { Image, Text, Link, HStack, VStack, Divider, Icon } from "@chakra-ui/react";
-import { FavoriteBorder, Repeat } from "@mui/icons-material";
+import { Image, Text, Link, HStack, VStack, Divider } from "@chakra-ui/react";
 
 export const Tweet = memo((props) => {
 	return (

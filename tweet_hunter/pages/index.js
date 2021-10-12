@@ -15,31 +15,45 @@ import {
 import { useEffect, useState } from "react";
 import {Tweet} from "../Components/Tweet";
 import Logo from "../Static/TwitterLogo.png";
+import { addScaleCorrection } from "framer-motion";
 
 export default function Home(props) {
+
 	const [username, setUsername] = useState(null);
 	const [tweets, setTweets] = useState(null);
-	const [embeds, setEmbeds] = useState(null);
 	const [count, setCount] = useState(100);
   const [retweets, setRetweets] = useState(false)
   const [replies, setReplies] = useState(false)
 
 	async function fetchTweets() {
-		let res = await fetch(`/api/data?username=${username}&count=${count}&retweets=${retweets}&replies=${replies}`);
-		let data = await res.json();
-    console.log(data)
-    let sortedData = Sort(data)
-		setTweets(sortedData);
+    if(username){
+      let res = await fetch(`/api/data?username=${username}&count=${count}&retweets=${retweets}&replies=${replies}`);
+      let data = await res.json();
+      if(data.length){
+        let sortedData = Sort(data)
+        setTweets(sortedData);
+      } else{
+        alert('There was an error getting the tweets! Please check the handle is correct...')
+      }
+    } else{
+      alert('You need to enter a handle!')
+    }
 	}
 
   function Sort(data){
-    let sorted = data.sort((a,b)=> b.favorite_count < a.favorite_count ? - 1 : Number(b.favorite_count > a.favorite_count))
+    let sorted = data.sort((a,b)=> calculate(a,b))
     return sorted
+  }
+
+  function calculate(a,b){
+    return (b.favorite_count + b.retweet_count*2) < (a.favorite_count + a.retweet_count*2) 
+    ? - 1 
+    : Number((b.favorite_count + b.retweet_count*2) > (a.favorite_count + a.retweet_count*2))
   }
 
 	return (
 		<div className={styles.container}>
-			<h1 className={styles.title} style={{marginBottom:'2vh'}}>Title</h1>
+			<h1 style={{marginBottom:'2vh', fontWeight:'bold', fontSize:'3vh'}}>Popular Tweets ⭐</h1>
 			<div className={styles.InputContainer}>
 				<div className={styles.InputLabel}>Handle:</div>
 				<Input onChange={(e) => setUsername(e.target.value)} placeholder="@" size="sm"></Input>
@@ -64,7 +78,7 @@ export default function Home(props) {
 						<Image outline='none' src={Logo}></Image>
 					</SliderThumb>
 				</Slider>
-				<div style={{marginLeft:'0.5vw'}}>{count}</div>
+				<div style={{marginLeft:'1vw'}}>{count}</div>
 			</div>
       <HStack marginTop='1vw'>
         <Checkbox onChange={(e)=>{setRetweets(e.target.checked)}}>Include RT's</Checkbox>
