@@ -1,4 +1,4 @@
-import styles from "../styles/Home.module.css";
+import styles from "../styles/Index.module.css";
 import { memo } from "react";
 import { Image, Text, Link, HStack, VStack, Divider } from "@chakra-ui/react";
 
